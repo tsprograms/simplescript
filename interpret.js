@@ -103,7 +103,7 @@ Copyright © 2016 TSPrograms.
   };
   var execute = function(tokenized, useOldEnv) {
     if (!useOldEnv) {
-      environment = createEnvironement();
+      environment = createEnvironment();
     }
     if (tokenized.length === 0) {
       return;
