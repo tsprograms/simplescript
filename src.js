@@ -165,7 +165,7 @@ Copyright © 2016 TSPrograms.
     if (tokenized.length === 0) {
       throw 'SimpleScript: ParseError: tokenized.length is 0';
     }
-    if (tokenized.length === 1) {
+    if (tokenized.length === 1 && typeof tokenized !== 'string') {
       return execute(tokenized[0]);
     }
     return evaluate(tokenized);
