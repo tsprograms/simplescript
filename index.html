@@ -21,6 +21,7 @@
                 el.className = 'repl-direct';
               }
               output.appendChild(el);
+              return true;
             };
             outFunc(simpleScript.run(input.value, undefined, outFunc), true);
             input.value = '';
@@ -39,6 +40,10 @@
       #output {
         overflow: scroll;
       }
+      #output>.repl-direct {
+        font-style: italic;
+        margin-top: 3vh;
+      }
       #input {
         background: black;
         color: lime;
@@ -47,9 +52,6 @@
         font-family: monospace;
         position: fixed;
         bottom: 0;
-      }
-      .repl-direct {
-        font-style: italic;
       }
     </style>
   </head>
