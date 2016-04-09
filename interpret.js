@@ -118,7 +118,12 @@ Copyright © 2016 TSPrograms.
     return evaluate(tokenized);
   };
   var runCode = function(codeString) {
-    return execute(tokenize(codeString));
+    codeString = (codeString + '').split(';');
+    var result;
+    for (var i = 0; i < codeString.length; ++i) {
+      result = execute(tokenize(codeString[i].trim()));
+    }
+    return result;
   };
   
   window.simpleScript = {};
