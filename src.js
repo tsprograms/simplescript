@@ -45,7 +45,7 @@ Copyright © 2016 TSPrograms.
       "?": function(condition, action, elseAction) {
         if (isTruthy(condition)) {
           if (typeof action === 'function') {
-            return call(action, [condition]);
+            return action.call(variables, condition);
           }
           else {
             return true;
@@ -53,7 +53,7 @@ Copyright © 2016 TSPrograms.
         }
         else {
           if (typeof elseAction === 'function') {
-            return call(elseAction, [condition]);
+            return elseAction.call(variables, condition);
           }
           else {
             return false;
@@ -64,7 +64,7 @@ Copyright © 2016 TSPrograms.
         var result = undefined;
         while (isTruthy(condition)) {
           if (typeof action === 'function') {
-            result = call(action, [condition]);
+            result = action.call(variables, condition);
           }
         }
         return result;
