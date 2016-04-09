@@ -10,7 +10,7 @@ Copyright © 2016 TSPrograms.
     var levels = 0;
     var tokenized = [''];
     var index = 0;
-    var containsParts = codeString.charAt(0) === '(' || (/\s/).test(codeString.charAt(i));
+    var containsParts = codeString.charAt(0) === '(' || (/\s/).test(codeString);
     if (!containsParts) {
       return codeString;
     }
