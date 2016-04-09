@@ -62,8 +62,11 @@ Copyright © 2016 TSPrograms.
       ">>": function(output) {
         window.alert(output);
       },
-      "<<": function() {
-        return window.prompt('<<input>>');
+      "<<": function(prompt) {
+        return window.prompt(prompt);
+      },
+      "+": function(el1, el2) {
+        return el1 + el2;
       }
     };
     return call;
