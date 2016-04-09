@@ -125,4 +125,7 @@ Copyright © 2016 TSPrograms.
   window.simpleScript.run = function(codeString) {
     return runCode(codeString);
   };
+  window.simpleScript._tokenize = tokenize;
+  window.simpleScript._evaluate = evaluate;
+  window.simpleScript._runCode  = runCode;
 })();
