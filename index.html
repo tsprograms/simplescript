@@ -13,13 +13,16 @@
         
         input.addEventListener('keydown', function(event) {
           if (event.keyCode === 13) {
-            var outFunc = function(out) {
+            var outFunc = function(out, isDirect) {
               var el = document.createElement('div');
               el.textContent = out;
               el.innerText   = out;
+              if (isDirect) {
+                el.className = 'repl-direct';
+              }
               output.appendChild(el);
             };
-            simpleScript.run(input.value, undefined, outFunc);
+            outFunc(simpleScript.run(input.value, undefined, outFunc), true);
             input.value = '';
           }
         });
@@ -44,6 +47,9 @@
         font-family: monospace;
         position: fixed;
         bottom: 0;
+      }
+      .repl-direct {
+        font-style: italic;
       }
     </style>
   </head>
