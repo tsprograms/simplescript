@@ -15,11 +15,14 @@
           if (event.keyCode === 13) {
             var outFunc = function(out, isDirect) {
               var el = document.createElement('div');
-              el.textContent = out;
-              el.innerText   = out;
               if (isDirect) {
                 el.className = 'repl-direct';
               }
+              else {
+                out = '[log] ' + out;
+              }
+              el.textContent = out;
+              el.innerText   = out;
               output.appendChild(el);
               return true;
             };
@@ -42,7 +45,7 @@
       }
       #output>.repl-direct {
         font-style: italic;
-        margin-top: 3vh;
+        margin-bottom: 2.5vh;
       }
       #input {
         background: black;
