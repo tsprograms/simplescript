@@ -118,7 +118,7 @@ Copyright © 2016 TSPrograms.
       var func = tokenized[0];
       tokenized.shift();
       for (var i = 0; i < tokenized.length; ++i) {
-        tokenized[i] = evaluate(tokenized);
+        tokenized[i] = evaluate(tokenized[i]);
       }
       return environment(func, tokenized);
     };
