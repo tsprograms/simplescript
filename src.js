@@ -70,8 +70,14 @@ Copyright © 2016 TSPrograms.
         return result;
       },
       ">>": function(output) {
-        if (typeof output === 'function') {
+        if (output === undefined) {
+          output = '( nil )';
+        }
+        else if (typeof output === 'function') {
           output = '( function )';
+        }
+        else if (typeof output === 'boolean') {
+          output = '( ' + output + ' )';
         }
         return outFunc(output);
       },
