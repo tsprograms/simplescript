@@ -5,45 +5,7 @@ Copyright © 2016 TSPrograms.
 
 // Enclose code in an anonymous function to prevent implicit globals.
 (function() {
-  var tokenize = function(codeString) {
-    codeString += ''; // Make sure codeString is a string.
-    var levels = 0;
-    var tokenized = [''];
-    var index = 0;
-    var containsParts = codeString.charAt(0) === '(' || (/\s/).test(codeString);
-    if (!containsParts) {
-      return codeString;
-    }
-    for (var i = 0; i < codeString.length; ++i) {
-      if (levels === 0 && (/\s/).test(codeString.charAt(i))) {
-        ++index;
-        tokenized[index] = '';
-      }
-      else if (tokenized[index] === '' && codeString.charAt(i) === '(') {
-        ++levels;
-      }
-      else if (codeString.charAt(i) === ')' && (/\s|$/).test(codeString.charAt(i + 1))) {
-        --levels;
-      }
-      else {
-        tokenized[index] += codeString.charAt(i);
-      }
-    }
-    var retokenized = [];
-    for (var i = 0; i < tokenized.length; ++i) {
-      if (tokenized[i] !== '') {
-        retokenized.push(tokenize(tokenized[i]));
-      }
-    }
-    return retokenized;
-  };
-  var execute = function(tokenized) {
-    if (tokenized.length === 0) {
-      return;
-    }
-    if (tokenized.length === 1) {
-      return execute(tokenized[0]);
-    }
+  var createEnvironment = function() {
     var specials = ['=', ':', '?', '?..', ">>", "<<"];
     var TRUE = " ";
     var FALSE = "";
@@ -104,6 +66,51 @@ Copyright © 2016 TSPrograms.
         return window.prompt('<<input>>');
       }
     };
+    return call;
+  };
+  var environment = createEnvironment();
+  var tokenize = function(codeString) {
+    codeString += ''; // Make sure codeString is a string.
+    var levels = 0;
+    var tokenized = [''];
+    var index = 0;
+    var containsParts = codeString.charAt(0) === '(' || (/\s/).test(codeString);
+    if (!containsParts) {
+      return codeString;
+    }
+    for (var i = 0; i < codeString.length; ++i) {
+      if (levels === 0 && (/\s/).test(codeString.charAt(i))) {
+        ++index;
+        tokenized[index] = '';
+      }
+      else if (tokenized[index] === '' && codeString.charAt(i) === '(') {
+        ++levels;
+      }
+      else if (codeString.charAt(i) === ')' && (/\s|$/).test(codeString.charAt(i + 1))) {
+        --levels;
+      }
+      else {
+        tokenized[index] += codeString.charAt(i);
+      }
+    }
+    var retokenized = [];
+    for (var i = 0; i < tokenized.length; ++i) {
+      if (tokenized[i] !== '') {
+        retokenized.push(tokenize(tokenized[i]));
+      }
+    }
+    return retokenized;
+  };
+  var execute = function(tokenized, useOldEnv) {
+    if (!useOldEnv) {
+      environment = createEnvironement();
+    }
+    if (tokenized.length === 0) {
+      return;
+    }
+    if (tokenized.length === 1) {
+      return execute(tokenized[0]);
+    }
     var evaluate = function(tokenized) {
       if (!(tokenized instanceof window.Array)) {
         return '' + tokenized;
@@ -113,7 +120,7 @@ Copyright © 2016 TSPrograms.
       for (var i = 0; i < tokenized.length; ++i) {
         tokenized[i] = evaluate(tokenized);
       }
-      return call(func, tokenized);
+      return environment(func, tokenized);
     };
     return evaluate(tokenized);
   };
@@ -121,7 +128,7 @@ Copyright © 2016 TSPrograms.
     codeString = (codeString + '').split(';');
     var result;
     for (var i = 0; i < codeString.length; ++i) {
-      result = execute(tokenize(codeString[i].trim()));
+      result = execute(tokenize(codeString[i].trim()), i !== 0);
     }
     return result;
   };
