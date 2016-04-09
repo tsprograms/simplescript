@@ -48,7 +48,12 @@ Copyright © 2016 TSPrograms.
     var TRUE = " ";
     var FALSE = "";
     var call = function(funcName, args) {
-      return functions[funcName].apply(this, args);
+      if (functions.hasOwnProperty(funcName)) {
+        return functions[funcName].apply(this, args);
+      }
+      else {
+        return FALSE;
+      }
     };
     var variables = {};
     var functions = {
