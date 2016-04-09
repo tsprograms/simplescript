@@ -30,7 +30,7 @@ Copyright © 2016 TSPrograms.
       }
     }
     var retokenized = [];
-    for (var i = 0; i < tokenized.length; i++) {
+    for (var i = 0; i < tokenized.length; ++i) {
       if (tokenized[i] !== '') {
         retokenized.push(tokenize(tokenized[i]));
       }
@@ -99,6 +99,18 @@ Copyright © 2016 TSPrograms.
         return window.prompt('<<input>>');
       }
     };
+    var evaluate = function(tokenized) {
+      if (!(tokenized instanceof window.Array)) {
+        return '' + tokenized;
+      }
+      var func = tokenized[0];
+      tokenized.shift();
+      for (var i = 0; i < tokenized.length; ++i) {
+        tokenized[i] = evaluate(tokenized);
+      }
+      return call(func, tokenized);
+    };
+    return evaluate(tokenized);
   };
   var runCode = function(codeString) {
     return execute(tokenize(codeString));
