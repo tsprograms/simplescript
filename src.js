@@ -141,6 +141,9 @@ Copyright © 2016 TSPrograms.
     return retokenized;
   };
   var evaluate = function(tokenized) {
+    if (tokenized.length === 1) {
+      return evaluate(tokenized[0]);
+    }
     if (!(tokenized instanceof window.Array)) {
       var token = '' + tokenized;
       if (!(/[^0-9]/).test(token)) {
