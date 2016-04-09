@@ -6,7 +6,8 @@ Copyright © 2016 TSPrograms.
 // Enclose code in an anonymous function to prevent implicit globals.
 (function() {
   var createEnvironment = function() {
-    var specials = ['=', ':', '?', '?..', ">>", "<<"];
+    var specialFuncs = ['=', ':', '?', '?..', '>>', '<<', '+', '++'];
+    var specialVars = ['true', 'false'];
     var TRUE = " ";
     var FALSE = "";
     var call = function(funcName, args) {
@@ -23,8 +24,11 @@ Copyright © 2016 TSPrograms.
     };
     var functions = {
       "=": function(key, val) {
-        variables[key] = val;
-        return TRUE;
+        if (specialVars.indexOf(key) === -1) {
+          variables[key] = val;
+          return TRUE;
+        }
+        return FALSE;
       },
       ":": function(key) {
         if (variables.hasOwnProperty(key)) {
@@ -64,12 +68,27 @@ Copyright © 2016 TSPrograms.
       },
       ">>": function(output) {
         window.alert(output);
+        return TRUE;
       },
       "<<": function(prompt) {
         return window.prompt(prompt);
       },
-      "+": function(el1, el2) {
-        return el1 + el2;
+      "+": function() {
+        var sum = '';
+        for (var i = 0; i < arguments.length; ++i) {
+          sum += arguments[i];
+        }
+        return sum;
+      },
+      "++": function(name, func1, func2) {
+        if (specialsFuncs.indexOf(name) === -1) {
+          functions[name] = (function() {
+            call(func1, arguments)
+            return call(func2, arguments);
+          });
+          return TRUE;
+        }
+        return FALSE;
       }
     };
     return call;
