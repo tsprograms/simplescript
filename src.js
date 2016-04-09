@@ -4,11 +4,11 @@ Copyright © 2016 TSPrograms.
 */
 
 (function() {
-  var out = function(output) {
+  var outFunc = function(output) {
     window.alert(output);
     return true;
   };
-  var in = function(msg) {
+  var inFunc = function(msg) {
     return window.prompt(msg);
   };
   var Context = function() {
@@ -138,5 +138,47 @@ Copyright © 2016 TSPrograms.
       }
     }
     return retokenized;
+  };
+  var evaluate = function(tokenized) {
+    if (!(tokenized instanceof window.Array)) {
+      var token = '' + tokenized;
+      if (!(/[^0-9]/).test(token)) {
+        token = window.parseInt(token, 10);
+      }
+    }
+    var func = evaluate(tokenized[0]);
+    tokenized.shift();
+    for (var i = 0; i < tokenized.length; ++i) {
+      tokenized[i] = evaluate(tokenized[i]);
+    }
+    return context.call(func, tokenized);
+  };
+  var execute = function(tokenized, useOldEnv) {
+    if (!useOldEnv) {
+      context = new Context();
+    }
+    if (tokenized.length === 0) {
+      throw 'SimpleScript: ParseError: tokenized.length is 0';
+    }
+    if (tokenized.length === 1) {
+      return execute(tokenized[0]);
+    }
+    return evaluate(tokenized);
+  };
+  var runCode = function(codeString, argIn, argOut) {
+    inFunc  = (typeof argIn  === 'function') ? argIn  : (function(output) { window.alert(output); return true; });
+    outFunc = (typeof argOut === 'function') ? argOut : (function(msg) { return window.prompt(msg); });
+    codeString = (codeString + '').split(';');
+    var result;
+    for (var i = 0; i < codeString.length; ++i) {
+      result = execute(tokenize(codeString[i].trim()), i !== 0);
+    }
+    return result;
+  };
+  
+  window.simpleScript = {
+    run: function(code, inFunc, outFunc) {
+      return runCode(code, inFunc, outFunc);
+    }
   };
 })();
