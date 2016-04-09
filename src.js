@@ -70,7 +70,7 @@ Copyright © 2016 TSPrograms.
         return result;
       },
       ">>": function(output) {
-        return out(output);
+        return outFunc(output);
       },
       "<<": function(msg) {
         return inFunc(msg);
