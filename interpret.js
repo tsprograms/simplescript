@@ -37,4 +37,70 @@ Copyright © 2016 TSPrograms.
     }
     return retokenized;
   };
+  var execute = function(tokenized) {
+    if (tokenized.length === 0) {
+      return;
+    }
+    if (tokenized.length === 1) {
+      return execute(tokenized[0]);
+    }
+    var specials = ['=', ':', '?', '?..', ">>", "<<"];
+    var TRUE = " ";
+    var FALSE = "";
+    var call = function(funcName, args) {
+      return functions[funcName].apply(this, args);
+    };
+    var variables = {};
+    var functions = {
+      "=": function(key, val) {
+        variables[key] = val;
+        return TRUE;
+      },
+      ":": function(key) {
+        if (variables.hasOwnProperty(key)) {
+          return variables[key];
+        }
+        else {
+          return FALSE;
+        }
+      },
+      "!": function(val) {
+        return val === FALSE ? TRUE : FALSE;
+      },
+      "?": function(condition, action, elseAction) {
+        if (condition !== FALSE) {
+          if (typeof action !== 'undefined') {
+            return call(action, [condition]);
+          }
+          else {
+            return TRUE;
+          }
+        }
+        else {
+          if (typeof elseAction !== 'undefined') {
+            return call(elseAction, [condition]);
+          }
+          else {
+            return FALSE;
+          }
+        }
+      },
+      "?..": function(condition, action) {
+        while (condition !== FALSE) {
+          if (typeof action !== 'undefined') {
+            call(action, [condition]);
+          }
+        }
+      },
+      ">>": function(output) {
+        window.alert(output);
+      },
+      "<<": function() {
+        return window.prompt('<<input>>');
+      }
+    };
+  };
+  var runCode = function(codeString) {
+    return execute(tokenize(codeString));
+  };
 })();
