@@ -115,4 +115,9 @@ Copyright © 2016 TSPrograms.
   var runCode = function(codeString) {
     return execute(tokenize(codeString));
   };
+  
+  window.simpleScript = {};
+  window.simpleScript.run = function(codeString) {
+    return runCode(codeString);
+  };
 })();
