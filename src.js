@@ -36,7 +36,7 @@ Copyright © 2016 TSPrograms.
           return variables[key];
         }
         else {
-          return false;
+          return undefined;
         }
       },
       "!": function(val) {
