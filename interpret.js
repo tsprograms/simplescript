@@ -17,7 +17,10 @@ Copyright © 2016 TSPrograms.
         return FALSE;
       }
     };
-    var variables = {};
+    var variables = {
+      "true": TRUE,
+      "false": FALSE
+    };
     var functions = {
       "=": function(key, val) {
         variables[key] = val;
