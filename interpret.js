@@ -126,6 +126,6 @@ Copyright © 2016 TSPrograms.
     return runCode(codeString);
   };
   window.simpleScript._tokenize = tokenize;
-  window.simpleScript._evaluate = evaluate;
+  window.simpleScript._execute  = execute;
   window.simpleScript._runCode  = runCode;
 })();
