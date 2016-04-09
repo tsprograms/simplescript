@@ -145,6 +145,7 @@ Copyright © 2016 TSPrograms.
       if (!(/[^0-9]/).test(token)) {
         token = window.parseInt(token, 10);
       }
+      return token;
     }
     var func = evaluate(tokenized[0]);
     tokenized.shift();
