@@ -14,7 +14,7 @@
         input.addEventListener('keydown', function(event) {
           if (event.keyCode === 13) {
             var outFunc = function(out) {
-              var el = createElement('div');
+              var el = document.createElement('div');
               el.textContent = out;
               el.innerText   = out;
               output.appendElement(el);
@@ -30,6 +30,12 @@
         background: black;
         font-family: monospace;
         color: lime;
+      }
+      #input {
+        background: black;
+        color: lime;
+        width: 100vw;
+        font-family: monospace;
       }
     </style>
   </head>
