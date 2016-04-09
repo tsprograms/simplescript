@@ -4,8 +4,37 @@
     <meta charset="utf-8">
     <title>SimpleScript</title>
     <script src="src.js"></script>
+    <script>
+      var input;
+      var output;
+      document.addEventListener('DOMContentLoaded', function() {
+        input = document.getElementById('input');
+        output = document.getElementById('output');
+        
+        input.addEventListener('keydown', function(event) {
+          if (event.keyCode === 13) {
+            var outFunc = function(out) {
+              var el = createElement('div');
+              el.textContent = out;
+              el.innerText   = out;
+              output.appendElement(el);
+            };
+            simpleScript.run(input.value, undefined, outFunc);
+            input.value = '';
+          }
+        });
+      });
+    </script>
+    <style>
+      body {
+        background: black;
+        font-family: monospace;
+        color: lime;
+      }
+    </style>
   </head>
   <body>
-    <h1>SimpleScript</h1>
+    <div id="output"></div>
+    <input id="input" type="text" placeholder="Type a command">
   </body>
 </html>
