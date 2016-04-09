@@ -17,7 +17,7 @@
               var el = document.createElement('div');
               el.textContent = out;
               el.innerText   = out;
-              output.appendElement(el);
+              output.appendChild(el);
             };
             simpleScript.run(input.value, undefined, outFunc);
             input.value = '';
