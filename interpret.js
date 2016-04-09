@@ -22,7 +22,7 @@ Copyright © 2016 TSPrograms.
       else if (tokenized[index] === '' && codeString.charAt(i) === '(') {
         ++levels;
       }
-      else if (codeString.charAt(i) === ')' && (/\s/).test(codeString.charAt(i + 1))) {
+      else if (codeString.charAt(i) === ')' && (/\s|$/).test(codeString.charAt(i + 1))) {
         --levels;
       }
       else {
