@@ -73,7 +73,8 @@ Copyright © 2016 TSPrograms.
         return outFunc(output);
       },
       "<<": function(msg) {
-        return inFunc(msg);
+        var input = inFunc(msg);
+        return input === null ? undefined : input;
       },
       "+": function() {
         var sum = arguments[0];
