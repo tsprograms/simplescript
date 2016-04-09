@@ -141,15 +141,15 @@ Copyright © 2016 TSPrograms.
     return retokenized;
   };
   var evaluate = function(tokenized) {
-    if (tokenized.length === 1) {
-      return evaluate(tokenized[0]);
-    }
     if (!(tokenized instanceof window.Array)) {
       var token = '' + tokenized;
       if (!(/[^0-9]/).test(token)) {
         token = window.parseInt(token, 10);
       }
       return token;
+    }
+    if (tokenized.length === 1) {
+      return evaluate(tokenized[0]);
     }
     var func = evaluate(tokenized[0]);
     tokenized.shift();
