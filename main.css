@@ -1,0 +1,27 @@
+body {
+  margin: 0;
+  background: black;
+  font-family: monospace;
+  color: lime;
+  height: 90vh;
+}
+#output {
+  overflow: scroll;
+}
+#output>.repl-direct {
+  font-style: italic;
+  margin-bottom: 2.5vh;
+}
+#input {
+  background: black;
+  color: lime;
+  border: none;
+  width: 98vw;
+  font-family: monospace;
+  position: fixed;
+  bottom: 0;
+}
+#input::before {
+  content: '[$] ';
+  width: 2vw;
+}
