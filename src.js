@@ -117,7 +117,7 @@ Copyright © 2016 TSPrograms.
       },
       '"': function(val) {
         return getString(val);
-      }
+      },
       "true": true,
       "false": false,
       "nil": undefined
