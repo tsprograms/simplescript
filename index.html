@@ -18,6 +18,7 @@
               var el = document.createElement('div');
               if (isDirect) {
                 el.className = 'repl-direct';
+                out = simpleScript.valToString(out);
               }
               else {
                 out = '[log] ' + out;
