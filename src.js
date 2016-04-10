@@ -79,7 +79,7 @@ Copyright © 2016 TSPrograms.
           if (typeof action === 'function') {
             result = action.call(variables, condition);
           }
-          if (loopCount >= 2^16) {
+          if (loopCount >= 65536) {
             throw 'SimpleScript: ResponseError: Maximum loop count exceeded (65535)';
           }
           ++loopCount;
