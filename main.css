@@ -18,6 +18,7 @@ body {
   border: none;
   width: 98vw;
   font-family: monospace;
+  font-size: 1em;
   position: fixed;
   bottom: 0;
   right: 0;
