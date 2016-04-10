@@ -202,21 +202,21 @@ Copyright © 2016 TSPrograms.
     }
     return evaluate(tokenized, args);
   };
-  var runCode = function(codeString, argIn, argOut, args) {
+  var runCode = function(codeString, argIn, argOut, args, reuseContext) {
     inFunc  = (typeof argIn  === 'function') ? argIn  : (function(output) { window.alert(output); return true; });
     outFunc = (typeof argOut === 'function') ? argOut : (function(msg) { return window.prompt(msg); });
     args = args || [];
     codeString = (codeString + '').split(';');
     var result = undefined;
     for (var i = 0; i < codeString.length; ++i) {
-      result = execute(tokenize(codeString[i].trim()), i !== 0, args);
+      result = execute(tokenize(codeString[i].trim()), reuseContext || i !== 0, args);
     }
     return result;
   };
   
   window.simpleScript = {
-    run: function(code, inFunc, outFunc) {
-      return runCode(code, inFunc, outFunc);
+    run: function() {
+      return runCode.apply(this, arguments);
     },
     valToString: function(val) {
       return getString(val);
