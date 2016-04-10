@@ -35,7 +35,7 @@ Copyright © 2016 TSPrograms.
     };
     var variables = {
       "=": function(key, val) {
-        if (typeof key === 'string' && typeof val === 'string' && RESERVED.indexOf(key) === -1) {
+        if (typeof key === 'string' && RESERVED.indexOf(key) === -1) {
           variables[key] = val;
           return true;
         }
