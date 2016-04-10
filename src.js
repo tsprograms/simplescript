@@ -23,7 +23,7 @@ Copyright © 2016 TSPrograms.
   };
   var Context = function() {
     var undefined;
-    var RESERVED = ['=', ':', '?', '?..', '>>', '<<', '+', '++', '::', "'", '"', '==', '!=', 'true', 'false', 'nil'];
+    var RESERVED = ['=', ':', '?', '?..', '>>', '<<', '+', '*', '++', '::', "'", '"', '==', '!=', 'true', 'false', 'nil'];
     var isTruthy = function(val) {
       return !!val;
     };
@@ -158,6 +158,30 @@ Copyright © 2016 TSPrograms.
             product *= arguments[i];
           }
           return product;
+        }
+        return undefined;
+      },
+      ">": function(val1, val2) {
+        if (typeof val1 === 'number' && typeof val2 === 'number') {
+          return val1 > val2;
+        }
+        return undefined;
+      },
+      ">=": function(val1, val2) {
+        if (typeof val1 === 'number' && typeof val2 === 'number') {
+          return val1 >= val2;
+        }
+        return undefined;
+      },
+      "<": function(val1, val2) {
+        if (typeof val1 === 'number' && typeof val2 === 'number') {
+          return val1 < val2;
+        }
+        return undefined;
+      },
+      "<=": function(val1, val2) {
+        if (typeof val1 === 'number' && typeof val2 === 'number') {
+          return val1 <= val2;
         }
         return undefined;
       },
