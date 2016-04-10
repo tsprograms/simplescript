@@ -11,6 +11,16 @@ Copyright © 2016 TSPrograms.
   var inFunc = function(msg) {
     return window.prompt(msg);
   };
+  var getString = function(val) {
+    switch (typeof val) {
+      case 'function':
+        return '( function )';
+      case 'undefined':
+        return '( nil )';
+      default:
+        return '' + val;
+    }
+  };
   var Context = function() {
     var undefined;
     var RESERVED = ['=', ':', '?', '?..', '>>', '<<', '+', '++', 'true', 'false', 'nil'];
@@ -70,16 +80,7 @@ Copyright © 2016 TSPrograms.
         return result;
       },
       ">>": function(output) {
-        if (output === undefined) {
-          output = '( nil )';
-        }
-        else if (typeof output === 'function') {
-          output = '( function )';
-        }
-        else if (typeof output === 'boolean') {
-          output = '( ' + output + ' )';
-        }
-        return outFunc(output);
+        return outFunc(getString(output));
       },
       "<<": function(msg) {
         var input = inFunc(msg);
@@ -149,7 +150,7 @@ Copyright © 2016 TSPrograms.
     }
     return retokenized;
   };
-  var evaluate = function(tokenized) {
+  var evaluate = function(tokenized, args) {
     if (!(tokenized instanceof window.Array)) {
       var token = '' + tokenized;
       if (!(/[^0-9]/).test(token)) {
@@ -163,6 +164,18 @@ Copyright © 2016 TSPrograms.
     if (tokenized.length === 1) {
       return evaluate(tokenized[0]);
     }
+    if (tokenized[0] === "'") {
+      return (function() {
+        return evaluate(tokenized[1], arguments);
+      });
+    }
+    else if (tokenized[0] === '::') {
+      var evaled = evaluate(tokenized[1]);
+      if (typeof evaled === 'number') {
+        return args[evaled];
+      }
+      return undefined;
+    }
     var func = evaluate(tokenized[0]);
     tokenized.shift();
     for (var i = 0; i < tokenized.length; ++i) {
@@ -170,7 +183,7 @@ Copyright © 2016 TSPrograms.
     }
     return context.call(func, tokenized);
   };
-  var execute = function(tokenized, useOldEnv) {
+  var execute = function(tokenized, useOldEnv, args) {
     if (!useOldEnv) {
       context = new Context();
     }
@@ -178,17 +191,18 @@ Copyright © 2016 TSPrograms.
       throw 'SimpleScript: ParseError: tokenized.length is 0';
     }
     if (tokenized.length === 1 && typeof tokenized !== 'string') {
-      return execute(tokenized[0]);
+      return execute(tokenized[0], useOldEnv, args);
     }
-    return evaluate(tokenized);
+    return evaluate(tokenized, args);
   };
-  var runCode = function(codeString, argIn, argOut) {
+  var runCode = function(codeString, argIn, argOut, args) {
     inFunc  = (typeof argIn  === 'function') ? argIn  : (function(output) { window.alert(output); return true; });
     outFunc = (typeof argOut === 'function') ? argOut : (function(msg) { return window.prompt(msg); });
+    args = args || [];
     codeString = (codeString + '').split(';');
     var result;
     for (var i = 0; i < codeString.length; ++i) {
-      result = execute(tokenize(codeString[i].trim()), i !== 0);
+      result = execute(tokenize(codeString[i].trim()), i !== 0, args);
     }
     return result;
   };
@@ -196,6 +210,9 @@ Copyright © 2016 TSPrograms.
   window.simpleScript = {
     run: function(code, inFunc, outFunc) {
       return runCode(code, inFunc, outFunc);
+    },
+    valToString: function(val) {
+      return getString(val);
     }
   };
 })();
