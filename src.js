@@ -108,19 +108,7 @@ Copyright © 2016 TSPrograms.
         return undefined;
       },
       "++": function() {
-        var args = arguments;
-        for (var i = 0; i < args.length; ++i) {
-          if (typeof args[i] !== 'function') {
-            return undefined;
-          }
-        }
-        return (function() {
-          var result = undefined;
-          for (var i = 0; i < args.length; ++i) {
-            result = args[i].apply(variables, arguments);
-          }
-          return result;
-        });
+        return arguments[arguments.length - 1];
       },
       '"': function(val) {
         return getString(val);
