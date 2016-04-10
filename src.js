@@ -176,7 +176,8 @@ Copyright © 2016 TSPrograms.
     if (tokenized[0] === "'") {
       var firstArg = tokenized[1];
       return (function() {
-        return evaluate(firstArg, arguments);
+        var tempFirstArg = firstArg.slice(0);
+        return evaluate(tempFirstArg, arguments);
       });
     }
     else if (tokenized[0] === '::') {
