@@ -152,7 +152,7 @@ Copyright © 2016 TSPrograms.
         else if (typeof first === 'number') {
           var product = first;
           for (var i = 1; i < arguments.length; i++) {
-            if (typeof products[i] !== 'number') {
+            if (typeof product[i] !== 'number') {
               return undefined;
             }
             product *= arguments[i];
