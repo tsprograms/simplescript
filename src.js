@@ -23,7 +23,7 @@ Copyright © 2016 TSPrograms.
   };
   var Context = function() {
     var undefined;
-    var RESERVED = ['=', ':', '?', '?..', '>>', '<<', '+', '++', '::', "'", 'true', 'false', 'nil'];
+    var RESERVED = ['=', ':', '?', '?..', '>>', '<<', '+', '++', '::', "'", '"', '==', '!=', 'true', 'false', 'nil'];
     var isTruthy = function(val) {
       return !!val;
     };
@@ -117,7 +117,7 @@ Copyright © 2016 TSPrograms.
         }
         return (function() {
           var result = undefined;
-          for (var i = 0; i < args.length; i++) {
+          for (var i = 0; i < args.length; ++i) {
             result = args[i].apply(variables, arguments);
           }
           return result;
@@ -125,6 +125,24 @@ Copyright © 2016 TSPrograms.
       },
       '"': function(val) {
         return getString(val);
+      },
+      "==": function() {
+        var orig = arguments[0];
+        for (var i = 1; i < arguments.length; ++i) {
+          if (arguments[i] !== orig) {
+            return false;
+          }
+        }
+        return true;
+      },
+      "!=": function() {
+        var orig = arguments[0];
+        for (var i = 1; i < arguments.length; ++i) {
+          if (arguments[i] !== orig) {
+            return true;
+          }
+        }
+        return false;
       },
       "true": true,
       "false": false,
