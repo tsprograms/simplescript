@@ -245,7 +245,7 @@ Copyright © 2016 TSPrograms.
         token = window.parseInt(token, 10);
       }
       else {
-        token = token.replace('\\s', ' ').replace('\\n', '\n').replace('\\r', '\r').replace('\\f', '\f').replace('\\\\', '\\');
+        token = token.replace(/\\s/g, ' ').replace(/\\n/g, '\n').replace(/\\r/g, '\r').replace(/\\f/g, '\f').replace(/\\\\/g, '\\');
       }
       return token;
     }
