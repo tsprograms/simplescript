@@ -34,7 +34,7 @@
               return true;
             };
             outFunc(input.value, false, true);
-            outFunc(simpleScript.run(input.value, undefined, outFunc), true);
+            outFunc(simpleScript.run(input.value, undefined, outFunc, [], true), true);
             input.value = '';
           }
         });
