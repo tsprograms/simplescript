@@ -71,11 +71,19 @@ Copyright © 2016 TSPrograms.
         }
       },
       "?..": function(condition, action) {
+        if (typeof condition !== 'function') {
+          condition = (function() { return condition; });
+        }
         var result = undefined;
-        while (isTruthy(condition)) {
+        var loopCount = 0;
+        while (isTruthy(condition(loopCount))) {
           if (typeof action === 'function') {
             result = action.call(variables, condition);
           }
+          if (loopCount >= 2^16) {
+            throw 'SimpleScript: ResponseError: Maximum loop count exceeded (65535)';
+          }
+          ++loopCount;
         }
         return result;
       },
