@@ -147,12 +147,12 @@ Copyright © 2016 TSPrograms.
       "*": function() {
         var first = arguments[0];
         if (typeof first === 'string' && typeof arguments[1] === 'number') {
-          return (new Array(arguments[1])).join(first);
+          return (new Array(arguments[1] + 1)).join(first);
         }
         else if (typeof first === 'number') {
           var product = first;
           for (var i = 1; i < arguments.length; i++) {
-            if (typeof product[i] !== 'number') {
+            if (typeof arguments[i] !== 'number') {
               return undefined;
             }
             product *= arguments[i];
