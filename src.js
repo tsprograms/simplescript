@@ -171,26 +171,25 @@ Copyright © 2016 TSPrograms.
       return token;
     }
     if (tokenized.length === 1) {
-      return evaluate(tokenized[0]);
+      return evaluate(tokenized[0], args);
     }
     if (tokenized[0] === "'") {
       var firstArg = tokenized[1];
       return (function() {
-        var closureArgs = arguments;
-        return evaluate(firstArg, closureArgs);
+        return evaluate(firstArg, arguments);
       });
     }
     else if (tokenized[0] === '::') {
-      var evaled = evaluate(tokenized[1]);
+      var evaled = evaluate(tokenized[1], args);
       if (typeof evaled === 'number') {
         return args[evaled];
       }
       return undefined;
     }
-    var func = evaluate(tokenized[0]);
+    var func = evaluate(tokenized[0], args);
     tokenized.shift();
     for (var i = 0; i < tokenized.length; ++i) {
-      tokenized[i] = evaluate(tokenized[i]);
+      tokenized[i] = evaluate(tokenized[i], args);
     }
     return context.call(func, tokenized);
   };
