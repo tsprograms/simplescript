@@ -25,4 +25,6 @@ body {
 #input-prefix {
   width: 2vw;
   display: inline-block;
+  position: fixed;
+  bottom: 0;
 }
