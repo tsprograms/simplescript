@@ -171,8 +171,9 @@ Copyright © 2016 TSPrograms.
       return evaluate(tokenized[0]);
     }
     if (tokenized[0] === "'") {
+      var firstArg = tokenized[1];
       return (function() {
-        return evaluate(tokenized[1], arguments);
+        return evaluate(firstArg, arguments);
       });
     }
     else if (tokenized[0] === '::') {
