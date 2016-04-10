@@ -20,7 +20,9 @@ body {
   font-family: monospace;
   position: fixed;
   bottom: 0;
+  display: inline-block;
 }
 #input-prefix {
   width: 2vw;
+  display: inline-block;
 }
