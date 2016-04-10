@@ -190,6 +190,12 @@ Copyright © 2016 TSPrograms.
         }
         return undefined;
       },
+      "%": function(val1, val2) {
+        if (typeof val1 === 'number' && typeof val2 === 'number') {
+          return val1 % val2; // Trailing decmals are cut off
+        }
+        return undefined;
+      },
       "true": true,
       "false": false,
       "nil": undefined
