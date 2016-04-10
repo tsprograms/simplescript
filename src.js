@@ -23,7 +23,6 @@ Copyright © 2016 TSPrograms.
   };
   var Context = function() {
     var undefined;
-    var RESERVED = ['=', ':', '?', '?..', '>>', '<<', '+', '*', '++', '::', "'", '"', '==', '!=', 'true', 'false', 'nil'];
     var isTruthy = function(val) {
       return !!val;
     };
@@ -185,10 +184,17 @@ Copyright © 2016 TSPrograms.
         }
         return undefined;
       },
+      "/": function(val1, val2) {
+        if (typeof val1 === 'number' && typeof val2 === 'number') {
+          return (val1 / val2) | 0; // Trailing decmals are cut off
+        }
+        return undefined;
+      },
       "true": true,
       "false": false,
       "nil": undefined
     };
+    var RESERVED = Object.keys(variables); // All above presets are reserved
     
     this.call = call;
     this._vars = variables;
