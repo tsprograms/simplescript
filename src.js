@@ -144,6 +144,23 @@ Copyright © 2016 TSPrograms.
         }
         return false;
       },
+      "*": function() {
+        var first = arguments[0];
+        if (typeof first === 'string' && typeof arguments[1] === 'number') {
+          return (new Array(arguments[1])).join(first);
+        }
+        else if (typeof first === 'number') {
+          var product = first;
+          for (var i = 1; i < arguments.length; i++) {
+            if (typeof products[i] !== 'number') {
+              return undefined;
+            }
+            product *= arguments[i];
+          }
+          return product;
+        }
+        return undefined;
+      },
       "true": true,
       "false": false,
       "nil": undefined
