@@ -23,7 +23,7 @@ Copyright © 2016 TSPrograms.
   };
   var Context = function() {
     var undefined;
-    var RESERVED = ['=', ':', '?', '?..', '>>', '<<', '+', '++', 'true', 'false', 'nil'];
+    var RESERVED = ['=', ':', '?', '?..', '>>', '<<', '+', '++', '::', "'", 'true', 'false', 'nil'];
     var isTruthy = function(val) {
       return !!val;
     };
@@ -100,13 +100,19 @@ Copyright © 2016 TSPrograms.
         }
         return undefined;
       },
-      "++": function(func1, func2) {
-        if (typeof func1 !== 'function' || typeof func2 !== 'function') {
-          return undefined;
+      "++": function() {
+        var args = arguments;
+        for (var i = 0; i < args.length; ++i) {
+          if (typeof args[i] !== 'function') {
+            return undefined;
+          }
         }
         return (function() {
-          func1.apply(variables, arguments);
-          return func2.apply(variables, arguments);
+          var result = undefined;
+          for (var i = 0; i < args.length; i++) {
+            result = args[i].apply(variables, arguments);
+          }
+          return result;
         });
       },
       "true": true,
@@ -200,7 +206,7 @@ Copyright © 2016 TSPrograms.
     outFunc = (typeof argOut === 'function') ? argOut : (function(msg) { return window.prompt(msg); });
     args = args || [];
     codeString = (codeString + '').split(';');
-    var result;
+    var result = undefined;
     for (var i = 0; i < codeString.length; ++i) {
       result = execute(tokenize(codeString[i].trim()), i !== 0, args);
     }
