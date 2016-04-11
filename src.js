@@ -221,6 +221,9 @@ Copyright © 2016 TSPrograms.
         tokenized[index] += codeString.charAt(i);
       }
     }
+    if (levels !== 0) {
+      throw "SimpleScript: ParseError: Unmatched parenthesis"
+    }
     var retokenized = [];
     for (var i = 0; i < tokenized.length; ++i) {
       if (tokenized[i] !== '') {
