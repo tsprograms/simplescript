@@ -8,9 +8,13 @@ body {
 #output {
   overflow: scroll;
 }
-#output>.repl-direct {
+#output>.repl-dir {
   font-style: italic;
   margin-bottom: 2.5vh;
+}
+#output>.repl-err {
+  color: red;
+  font-weight: bold;
 }
 #input {
   background: black;
