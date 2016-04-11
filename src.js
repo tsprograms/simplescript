@@ -70,9 +70,6 @@ Copyright © 2016 TSPrograms.
         }
       },
       "?..": function(condition, action) {
-        if (typeof condition !== 'function') {
-          condition = (function() { return condition; });
-        }
         var result = undefined;
         var loopCount = 0;
         while (isTruthy(condition(loopCount))) {
