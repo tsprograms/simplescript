@@ -111,7 +111,11 @@ Copyright © 2016 TSPrograms.
         return arguments[arguments.length - 1];
       },
       '"': function(val) {
-        return getString(val);
+        val = getString(val);
+        for (var i = 1; i < arguments.length; i++) {
+          val += ' ' + getString(arguments[i]);
+        }
+        return val;
       },
       "==": function() {
         var orig = arguments[0];
