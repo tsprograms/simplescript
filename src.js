@@ -211,10 +211,10 @@ Copyright © 2016 TSPrograms.
       codeString = codeString.slice(1, -1);
     }
     for (var i = 0; i < codeString.length; ++i) {
-      if (tokenized[index] === '' && codeString.charAt(i) === '(') {
+      if ((tokenized[index] === '' || (/\s|\)/).test(codeString.charAt(i - 1))) && codeString.charAt(i) === '(') {
         ++levels;
       }
-      else if (codeString.charAt(i) === ')' && (/\s|$|\)/).test(codeString.charAt(i + 1))) {
+      else if (codeString.charAt(i) === ')' && (/\s|\)|(^$)/).test(codeString.charAt(i + 1))) {
         --levels;
       }
       if (levels === 0 && (/\s/).test(codeString.charAt(i))) {
