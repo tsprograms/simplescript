@@ -195,7 +195,7 @@ Copyright © 2016 TSPrograms.
   };
   var context = new Context();
   var tokenize = function(codeString) {
-    codeString += ''; // Make sure codeString is a string.
+    codeString = ('' + codeString).trim(); // Make sure codeString is a string.
     var levels = 0;
     var tokenized = [''];
     var index = 0;
@@ -203,16 +203,19 @@ Copyright © 2016 TSPrograms.
     if (!containsParts) {
       return codeString;
     }
+    if (codeString.charAt(0) === '(' && codeString.charAt(codeString.length - 1) === ')') {
+      codeString = codeString.slice(1, -1);
+    }
     for (var i = 0; i < codeString.length; ++i) {
-      if (levels === 0 && (/\s/).test(codeString.charAt(i))) {
-        ++index;
-        tokenized[index] = '';
-      }
-      else if (tokenized[index] === '' && codeString.charAt(i) === '(') {
+      if (tokenized[index] === '' && codeString.charAt(i) === '(') {
         ++levels;
       }
       else if (codeString.charAt(i) === ')' && (/\s|$|\)/).test(codeString.charAt(i + 1))) {
         --levels;
+      }
+      if (levels === 0 && (/\s/).test(codeString.charAt(i))) {
+        ++index;
+        tokenized[index] = '';
       }
       else {
         tokenized[index] += codeString.charAt(i);
@@ -280,7 +283,7 @@ Copyright © 2016 TSPrograms.
     codeString = (codeString + '').split(';');
     var result = undefined;
     for (var i = 0; i < codeString.length; ++i) {
-      result = execute(tokenize(codeString[i].trim()), reuseContext || i !== 0, args);
+      result = execute(tokenize('(' + codeString[i].trim() + ')'), reuseContext || i !== 0, args);
     }
     return result;
   };
