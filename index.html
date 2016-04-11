@@ -15,26 +15,36 @@
         input.focus();
         input.addEventListener('keydown', function(event) {
           if (event.keyCode === 13) {
-            var outFunc = function(out, isDirect, isCmd) {
+            var outFunc = function(out, type) {
               var el = document.createElement('div');
-              if (isDirect) {
-                el.className = 'repl-direct';
-                out = simpleScript.valToString(out);
-              }
-              else if (isCmd) {
-                el.className = 'repl-cmd';
-                out = '[$] ' + out;
-              }
-              else {
-                out = '[log] ' + out;
+              switch (type) {
+                case 'dir':
+                  el.className = 'repl-dir';
+                  out = simpleScript.valToString(out);
+                  break;
+                case 'cmd':
+                  el.className = 'repl-cmd';
+                  out = '[$] ' + out;
+                  break;
+                case 'err':
+                  el.className = 'repl-err';
+                  break;
+                default:
+                  el.className = 'repl-log';
+                  out = '[log] ' + out;
               }
               el.textContent = out;
               el.innerText   = out;
               output.appendChild(el);
               return true;
             };
-            outFunc(input.value, false, true);
-            outFunc(simpleScript.run(input.value, undefined, outFunc, [], true), true);
+            outFunc(input.value, 'cmd');
+            try {
+              outFunc(simpleScript.run(input.value, undefined, outFunc, [], true), 'dir');
+            }
+            catch (e) {
+              outFunc('' + e, 'err')
+            }
             input.value = '';
           }
         });
