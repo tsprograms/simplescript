@@ -6,7 +6,7 @@ body {
   height: 90vh;
 }
 #output {
-  overflow: scroll;
+  overflow: auto;
 }
 #output>.repl-dir {
   font-style: italic;
