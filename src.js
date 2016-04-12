@@ -27,7 +27,10 @@ Copyright © 2016 TSPrograms.
       return !!val;
     };
     var call = function(funcName, args) {
-      if (typeof variables[funcName] === 'function') {
+      if (typeof funcName === 'function') {
+        return funcName.apply(variables, args);
+      }
+      else if (typeof variables[funcName] === 'function') {
         return variables[funcName].apply(variables, args);
       }
       return undefined;
