@@ -75,9 +75,10 @@ Copyright © 2016 TSPrograms.
       "?..": function(condition, action) {
         var result = undefined;
         var loopCount = 0;
-        while (isTruthy(condition(loopCount))) {
+        var isTrue;
+        while (isTruthy(isTrue = condition(loopCount))) {
           if (typeof action === 'function') {
-            result = action.call(variables, condition);
+            result = action.call(variables, isTrue);
           }
           if (loopCount >= 65536) {
             throw 'SimpleScript: ResponseError: Maximum loop count exceeded (65535)';
@@ -178,7 +179,7 @@ Copyright © 2016 TSPrograms.
       },
       "/": function(val1, val2) {
         if (typeof val1 === 'number' && typeof val2 === 'number') {
-          return (val1 / val2) | 0; // Trailing decmals are cut off
+          return (val1 / val2);
         }
         return undefined;
       },
@@ -203,6 +204,20 @@ Copyright © 2016 TSPrograms.
           }
         }
         return false;
+      },
+      "^": function(number, power) {
+        return Math.pow(number, power);
+      },
+      "√": function(number, rootPower) {
+        if (typeof number === 'number') {
+          if (typeof rootPower === 'number') {
+            return Math.pow(number, 1/rootPower);
+          }
+          else {
+            return Math.sqrt(number);
+          }
+        }
+        return undefined;
       },
       "true": true,
       "false": false,
@@ -267,7 +282,7 @@ Copyright © 2016 TSPrograms.
   var evaluate = function(tokenized, args) {
     if (!(tokenized instanceof window.Array)) {
       var token = '' + tokenized;
-      if ((/^(-?)([0-9]+)$/).test(token)) {
+      if ((/^(-?)([0-9]*)(\.?)([0-9]+)$/).test(token)) {
         token = window.parseInt(token, 10);
       }
       else {
