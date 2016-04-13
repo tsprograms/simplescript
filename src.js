@@ -188,6 +188,22 @@ Copyright © 2016 TSPrograms.
         }
         return undefined;
       },
+      "&": function() {
+        for (var i = 0; i < arguments.length; ++i) {
+          if (!isTruthy(arguments[i])) {
+            return false;
+          }
+        }
+        return true;
+      },
+      "|": function() {
+        for (var i = 0; i < arguments.length; ++i) {
+          if (isTruthy(arguments[i])) {
+            return true;
+          }
+        }
+        return false;
+      },
       "true": true,
       "false": false,
       "nil": undefined
