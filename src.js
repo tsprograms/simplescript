@@ -108,6 +108,15 @@ Copyright © 2016 TSPrograms.
         }
         return undefined;
       },
+      "-": function() {
+        for (var i = 0; i < arguments.length; ++i) {
+          if (typeof arguments[i] !== 'number') {
+            return undefined;
+          }
+          sum -= arguments[i];
+        }
+        return sum;
+      }
       "++": function() {
         return arguments[arguments.length - 1];
       },
