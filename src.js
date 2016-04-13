@@ -116,7 +116,7 @@ Copyright © 2016 TSPrograms.
           sum -= arguments[i];
         }
         return sum;
-      }
+      },
       "++": function() {
         return arguments[arguments.length - 1];
       },
