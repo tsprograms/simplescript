@@ -206,15 +206,15 @@ Copyright © 2016 TSPrograms.
         return false;
       },
       "^": function(number, power) {
-        return Math.pow(number, power);
+        return window.Math.pow(number, power);
       },
       "√": function(number, rootPower) {
         if (typeof number === 'number') {
           if (typeof rootPower === 'number') {
-            return Math.pow(number, 1/rootPower);
+            return window.Math.pow(number, 1/rootPower);
           }
           else {
-            return Math.sqrt(number);
+            return window.Math.sqrt(number);
           }
         }
         return undefined;
@@ -283,7 +283,12 @@ Copyright © 2016 TSPrograms.
     if (!(tokenized instanceof window.Array)) {
       var token = '' + tokenized;
       if ((/^(-?)([0-9]*)(\.?)([0-9]+)$/).test(token)) {
-        token = window.parseInt(token, 10);
+        if ((/^(-?)([0-9]+)/).test(token) {
+          token = window.parseInt(token, 10);
+        }
+        else {
+          token = window.parseFloat(token);
+        }
       }
       else {
         var oldToken = token;
