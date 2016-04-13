@@ -283,7 +283,7 @@ Copyright © 2016 TSPrograms.
     if (!(tokenized instanceof window.Array)) {
       var token = '' + tokenized;
       if ((/^(-?)([0-9]*)(\.?)([0-9]+)$/).test(token)) {
-        if ((/^(-?)([0-9]+)/).test(token)) {
+        if ((/^(-?)([0-9]+)$/).test(token)) {
           token = window.parseInt(token, 10);
         }
         else {
