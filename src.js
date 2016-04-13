@@ -236,40 +236,62 @@ Copyright © 2016 TSPrograms.
     }
     return retokenized;
   };
+  var escape = function(letter) {
+    switch (letter) {
+      case 'b': return '\b';
+      case 'f': return '\f';
+      case 'n': return '\n';
+      case 'r': return '\r';
+      case 's': return ' ';
+      case 't': return '\t';
+      default: return letter;
+    }
+  };
+  
   var evaluate = function(tokenized, args) {
     if (!(tokenized instanceof window.Array)) {
       var token = '' + tokenized;
-      if (!(/[^0-9]/).test(token)) {
+      if ((/^(-?)([0-9]+)$/).test(token)) {
         token = window.parseInt(token, 10);
       }
       else {
-        token = token.replace(/\\s/g, ' ').replace(/\\n/g, '\n').replace(/\\r/g, '\r').replace(/\\f/g, '\f').replace(/\\\\/g, '\\');
+        var oldToken = token;
+        for (var i = 0; i < oldToken.length; ++i) {
+          if (oldToken.charAt(i) === '\\') {
+            token += escape(oldToken.charAt(i + 1));
+            ++i;
+          }
+          else {
+            token += oldToken.charAt(i);
+          }
+        }
       }
       return token;
     }
     if (tokenized.length === 1) {
       return evaluate(tokenized[0], args);
     }
-    if (tokenized[0] === "'") {
-      var firstArg = tokenized[1];
-      return (function() {
-        var tempFirstArg = firstArg.slice(0);
-        return evaluate(tempFirstArg, arguments);
-      });
+    switch (tokenized[0]) {
+      case "'":
+        var firstArg = tokenized[1];
+        return (function() {
+          var tempFirstArg = firstArg.slice(0);
+          return evaluate(tempFirstArg, arguments);
+        });
+      case '::':
+        var evaled = evaluate(tokenized[1], args);
+        if (typeof evaled === 'number') {
+          return args[evaled];
+        }
+        return undefined;
+      default:
+        var func = evaluate(tokenized[0], args);
+        tokenized.shift();
+        for (var i = 0; i < tokenized.length; ++i) {
+          tokenized[i] = evaluate(tokenized[i], args);
+        }
+        return context.call(func, tokenized);
     }
-    else if (tokenized[0] === '::') {
-      var evaled = evaluate(tokenized[1], args);
-      if (typeof evaled === 'number') {
-        return args[evaled];
-      }
-      return undefined;
-    }
-    var func = evaluate(tokenized[0], args);
-    tokenized.shift();
-    for (var i = 0; i < tokenized.length; ++i) {
-      tokenized[i] = evaluate(tokenized[i], args);
-    }
-    return context.call(func, tokenized);
   };
   var execute = function(tokenized, useOldEnv, args) {
     if (!useOldEnv) {
