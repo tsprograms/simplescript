@@ -188,7 +188,10 @@ Copyright © 2016 TSPrograms.
       },
       "/": function(val1, val2) {
         if (typeof val1 === 'number' && typeof val2 === 'number') {
-          return (val1 / val2);
+          var result = (val1 / val2);
+          if (!window.isNaN(result)) {
+            return result;
+          }
         }
         return undefined;
       },
@@ -215,18 +218,30 @@ Copyright © 2016 TSPrograms.
         return false;
       },
       "^": function(number, power) {
-        return window.Math.pow(number, power);
-      },
-      "√": function(number, rootPower) {
-        if (typeof number === 'number') {
-          if (typeof rootPower === 'number') {
-            return window.Math.pow(number, 1/rootPower);
-          }
-          else {
-            return window.Math.sqrt(number);
+        if (typeof number === 'number' && typeof 'power' === 'number') {
+          var result = window.Math.pow(number, power);
+          if (!window.isNaN(result)) {
+            return result;
           }
         }
         return undefined;
+      },
+      "√": function(number, rootPower) {
+        var result = undefined;
+        if (typeof number === 'number') {
+          if (typeof rootPower !== 'undefined') {
+            if (typeof rootPower === 'number') {
+              result = window.Math.pow(number, 1/rootPower);
+            }
+          }
+          else {
+            result = window.Math.sqrt(number);
+          }
+        }
+        if (window.isNaN(result)) {
+          return undefined;
+        }
+        return result;
       },
       "true": true,
       "false": false,
