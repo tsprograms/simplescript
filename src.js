@@ -256,6 +256,7 @@ Copyright © 2016 TSPrograms.
       }
       else {
         var oldToken = token;
+        token = '';
         for (var i = 0; i < oldToken.length; ++i) {
           if (oldToken.charAt(i) === '\\') {
             token += escape(oldToken.charAt(i + 1));
