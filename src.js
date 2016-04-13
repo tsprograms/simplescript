@@ -158,7 +158,9 @@ Copyright © 2016 TSPrograms.
             }
             product *= arguments[i];
           }
-          return product;
+          if (!window.isNaN(product)) {
+            return product;
+          }
         }
         return undefined;
       },
