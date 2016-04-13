@@ -139,11 +139,11 @@ Copyright © 2016 TSPrograms.
       "!=": function() {
         var orig = arguments[0];
         for (var i = 1; i < arguments.length; ++i) {
-          if (arguments[i] !== orig) {
-            return true;
+          if (arguments[i] === orig) {
+            return false;
           }
         }
-        return false;
+        return true;
       },
       "*": function() {
         var first = arguments[0];
