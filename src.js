@@ -11,12 +11,35 @@ Copyright © 2016 TSPrograms.
   var inFunc = function(msg) {
     return window.prompt(msg);
   };
-  var getString = function(val) {
+  var getType = function(val) {
     switch (typeof val) {
       case 'function':
-        return '( function )';
+        return 'function';
       case 'undefined':
+        return 'nil';
+      case 'boolean':
+        return 'boolean';
+      case 'string':
+        return 'string';
+      case 'object':
+        if (val instanceof window.Array) {
+          return 'list';
+        }
+        return 'nil';
+    }
+  };
+  var getString = function(val) {
+    switch (getType(val)) {
+      case 'function':
+        return '( function )';
+      case 'nil':
         return '( nil )';
+      case 'list':
+        var result = '[ ';
+        for (var i = 0; i < val.length; i++) {
+          result.push(getString(val[i])) + ', ';
+        }
+        return result + ' ]';
       default:
         return '' + val;
     }
@@ -244,6 +267,9 @@ Copyright © 2016 TSPrograms.
           return undefined;
         }
         return result;
+      },
+      '[]': function() {
+        return window.Array.prototype.slice.call(arguments);
       },
       "true": true,
       "false": false,
