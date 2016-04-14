@@ -37,7 +37,7 @@ Copyright © 2016 TSPrograms.
       case 'list':
         var result = '[ ';
         for (var i = 0; i < val.length; i++) {
-          result.push(getString(val[i])) + ', ';
+          result += getString(val[i]) + ', ';
         }
         return result + ' ]';
       default:
