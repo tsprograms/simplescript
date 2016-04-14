@@ -36,8 +36,11 @@ Copyright © 2016 TSPrograms.
         return '( nil )';
       case 'list':
         var result = '[ ';
-        for (var i = 0; i < val.length; i++) {
-          result += getString(val[i]) + ', ';
+        for (var i = 0; i < val.length; ++i) {
+          if (i !== 0) {
+            result += ', ';
+          }
+          result += getString(val[i]);
         }
         return result + ' ]';
       default:
