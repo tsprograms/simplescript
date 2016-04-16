@@ -45,6 +45,7 @@ Copyright © 2016 TSPrograms.
         return result + ' ]';
       case 'string':
       case 'number':
+      case 'boolean':
         return '' + val;
       default:
         console.warn('SimpleScript: Unknown value: ' + val + ' (type = ' + typeof val + ')');
