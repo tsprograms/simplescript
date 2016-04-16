@@ -43,8 +43,12 @@ Copyright © 2016 TSPrograms.
           result += getString(val[i]);
         }
         return result + ' ]';
-      default:
+      case 'string':
+      case 'number':
         return '' + val;
+      default:
+        console.warn('SimpleScript: Unknown value: ' + val + ' (type = ' + typeof val + ')');
+        return '( ? )';
     }
   };
   var Context = function() {
